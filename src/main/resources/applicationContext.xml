@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 导入Spring整合Mybatis的一些配置文件 -->
+    <import resource="classpath:spring-dao.xml"/>
+
+    <beans>
+        <bean id="todayCoursesMapperImpl" class="com.nullatom.dao.TodayCoursesMapperImpl">
+            <!-- 绑定SqlSessionTemple -->
+            <property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+        </bean>
+
+        <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+            <constructor-arg ref="datasource"/>
+        </bean>
+
+        <bean id="naServer" class="com.nullatom.httpserver.NAServer">
+            <constructor-arg index="0" value="50003"/>
+        </bean>
+        <bean id="indexHandler" class="com.nullatom.handler.IndexHandler"/>
+
+    </beans>
+
+
+
+</beans>

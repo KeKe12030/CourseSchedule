@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 绑定接口 -->
+<mapper namespace="com.nullatom.dao.TodayCoursesMapper">
+
+	<!-- 获取参数传入的星期和轮对应的课程，通过List<TimeTable返回> -->
+    <select id="getDayTimeTables" parameterType="map" resultMap="timetable">
+		SELECT * FROM course_schedule.timetable WHERE week=#{week} AND round=#{round} ORDER BY number;
+	</select>
+
+	<!-- getDayTimeTables配合使用，查询传入的cid对应的课程，放入resultMap的asscoiation中 -->
+	<select id="getCourse" resultType="com.nullatom.pojo.Course">
+		SELECT * FROM course_schedule.courses WHERE id=#{cid};
+	</select>
+	<resultMap id="timetable" type="com.nullatom.pojo.TimeTable">
+		<result property="number" column="number"/>
+		<result property="week" column="week"/>
+		<result property="round" column="round"/>
+		<association property="course" column="cid" javaType="com.nullatom.pojo.Course" select="getCourse"/>
+	</resultMap>
+
+
+	<!-- 通过课程ID（cid）获取课程 -->
+	<select id="getCourseById" resultType="com.nullatom.pojo.Course" parameterType="int">
+		SELECT * FROM course_schedule.courses WHERE id = #{0};
+	</select>
+</mapper>
