@@ -32,7 +32,7 @@ public class DateUtils {
      * @return 今日的星期
      * */
     public static int getTodayWeek() {
-//        return 7;
+//        return 5;
         return Calendar.getInstance().get(Calendar.DAY_OF_WEEK) -1;//-1是因为老外一周是从周日开始的
     }
 }
