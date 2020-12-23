@@ -1,6 +1,7 @@
 package com.nullatom.util;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 日期相关的工具类
@@ -34,5 +35,15 @@ public class DateUtils {
     public static int getTodayWeek() {
 //        return 5;
         return Calendar.getInstance().get(Calendar.DAY_OF_WEEK) -1;//-1是因为老外一周是从周日开始的
+    }
+
+    /**
+     * 获取指定日期的星期
+     * @return 参数传入的日期的星期
+     * */
+    public static int getWeekByDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.DAY_OF_WEEK)-1;
     }
 }

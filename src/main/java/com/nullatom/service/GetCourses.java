@@ -59,5 +59,9 @@ public class GetCourses {
         int week = DateUtils.getTodayWeek();
         return getCoursesByWeek(week);
     }
+    public static List<TimeTable> getTomorrowCourses(){
+        int tomorrowWeek = DateUtils.getTodayWeek()+1;
+        return getCoursesByWeek(tomorrowWeek);
+    }
 
 }

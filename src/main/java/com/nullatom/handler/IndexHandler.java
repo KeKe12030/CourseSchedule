@@ -1,27 +1,36 @@
 package com.nullatom.handler;
 
-import com.google.gson.Gson;
 import com.nullatom.httpserver.handler.NAServerHandler;
 import com.nullatom.httpserver.utils.Request;
 import com.nullatom.httpserver.utils.Response;
 import com.nullatom.pojo.TimeTable;
 import com.nullatom.service.GetCourses;
-import com.nullatom.util.DateUtils;
 import com.nullatom.util.HtmlUtils;
-import org.apache.ibatis.io.Resources;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
 
 public class IndexHandler implements NAServerHandler {
     public void handle(Request request, Response response) {
-        List<TimeTable> todayCourses = GetCourses.getTodayCourses();
+        List<TimeTable> todayCoursesList = GetCourses.getTodayCourses();
         response.setResponseType("text/html");
-        String html = HtmlUtils.getHandledCoursesHtml(todayCourses);
-        response.print(html);
+        String todayCourses = HtmlUtils.getHandledCoursesHtml(todayCoursesList,0);//获取今日课程表
+        List<TimeTable> tomorrowCoursesList = GetCourses.getTomorrowCourses();
+        String tomorrowCourses = HtmlUtils.getHandledCoursesHtml(tomorrowCoursesList,1);//获取明日课程表
+
+        response.print("<h3>今日课程表</h3>" +
+                "<br/>" +
+                "<hr/>" +
+                "<br/>");
+        response.print(todayCourses);
+        response.print("" +
+                "<hr/>" +
+                "<br/>"+
+                "<h3>明日课程表</h3>" +
+                "<br/>" +
+                "<hr/>" +
+                "<br/>");
+        response.print(tomorrowCourses);
         try {
             response.pushToBrowser(200);
         } catch (IOException e) {
