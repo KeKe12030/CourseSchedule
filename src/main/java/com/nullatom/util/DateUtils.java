@@ -44,6 +44,7 @@ public class DateUtils {
     public static int getWeekByDate(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        return calendar.get(Calendar.DAY_OF_WEEK)-1;
+        int week = calendar.get(Calendar.DAY_OF_WEEK)-1;
+        if(week == 0) return 7; else return week;
     }
 }
