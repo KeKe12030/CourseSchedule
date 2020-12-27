@@ -34,18 +34,20 @@ public class GetCourses {
             round = DateUtils.getTodayRound();//获取今天轮数
             map.remove("round");
             map.put("round",round);
+            logger.info("获取星期天下午课程时的week："+week);
             //周天下午的课程表
             List<TimeTable> sundayAfternoonTimeTables = todayCoursesMapperImpl.getDayTimeTables(map);
+            logger.info("星期天下午的课程数量："+sundayAfternoonTimeTables.size());
             timeTableList.addAll(sundayAfternoonTimeTables);//合并星期天上午的课程和下午的课程
-
+            logger.info("星期天一天的课程数量："+timeTableList.size());
             /* 添加物理 / 化学 */
-            int pAndCRound = DateUtils.getTodayWeek()-36 % 2;//1是物理，0是化学
+            int pAndCRound = DateUtils.getTodayWeek()-36 % 2;//1是化学，0是物理
             TimeTable timeTable = null;
-            if(pAndCRound == 1){//物理
-                timeTable =  new TimeTable(todayCoursesMapperImpl.getCourseById(4), 3, 7, 0);
+            if(pAndCRound == 1){//化学
+                timeTable =  CommonUtils.getChemistryTimeTable(3,7,0);
                 timeTableList.add(timeTable);
-            }else{ //化学
-                timeTable =  new TimeTable(todayCoursesMapperImpl.getCourseById(5), 3, 7, 0);
+            }else{ //物理
+                timeTable =  CommonUtils.getPhysicsTimeTable(3, 7, 0);
                 timeTableList.add(timeTable);
             }
         }
@@ -61,6 +63,9 @@ public class GetCourses {
     }
     public static List<TimeTable> getTomorrowCourses(){
         int tomorrowWeek = DateUtils.getTodayWeek()+1;
+        if(tomorrowWeek == 8){
+            tomorrowWeek = 1;
+        }
         return getCoursesByWeek(tomorrowWeek);
     }
 

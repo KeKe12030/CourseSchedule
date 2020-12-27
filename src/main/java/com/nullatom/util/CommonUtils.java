@@ -1,6 +1,7 @@
 package com.nullatom.util;
 
 import com.nullatom.dao.TodayCoursesMapper;
+import com.nullatom.dao.TodayCoursesMapperImpl;
 import com.nullatom.pojo.Course;
 import com.nullatom.pojo.TimeTable;
 import org.springframework.context.ApplicationContext;
@@ -69,5 +70,13 @@ public class CommonUtils {
             stringBuilder.append(line);
         }
         return stringBuilder.toString();
+    }
+    public static TimeTable getPhysicsTimeTable(int number,int week,int round){
+        TodayCoursesMapperImpl todayCoursesMapperImpl = CommonUtils.getBean("todayCoursesMapperImpl", TodayCoursesMapperImpl.class);
+        return new TimeTable(todayCoursesMapperImpl.getCourseById(4), number, week, round);
+    }
+    public static TimeTable getChemistryTimeTable(int number,int week,int round){
+        TodayCoursesMapperImpl todayCoursesMapperImpl = CommonUtils.getBean("todayCoursesMapperImpl", TodayCoursesMapperImpl.class);
+        return new TimeTable(todayCoursesMapperImpl.getCourseById(5), number, week, round);
     }
 }

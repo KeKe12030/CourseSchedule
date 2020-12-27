@@ -23,7 +23,7 @@ public class DateUtils {
      */
     public static int getTodayRound(){
         int todayWeek = getTodayWeekInYear();
-        int roundWeek = todayWeek-37;//今天是第几轮
+        int roundWeek = Math.abs(todayWeek-36);//今天是第几轮
         int round = roundWeek % 3;
         return  round == 0 ? 3 : round;//如果round%3为0，则为第三轮。若round%3不是0，则余数为轮数
     }
@@ -45,6 +45,6 @@ public class DateUtils {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int week = calendar.get(Calendar.DAY_OF_WEEK)-1;
-        if(week == 0) return 7; else return week;
+        if (week == 0 ) return 7; else return week;
     }
 }
