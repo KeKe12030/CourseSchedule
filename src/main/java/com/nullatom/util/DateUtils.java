@@ -34,7 +34,7 @@ public class DateUtils {
      * */
     public static int getTodayWeek() {
 //        return 5;
-        return Calendar.getInstance().get(Calendar.DAY_OF_WEEK) -1;//-1是因为老外一周是从周日开始的
+        return getWeekByDate(new Date());
     }
 
     /**
